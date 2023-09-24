@@ -1,0 +1,161 @@
+-----------------------------------------------------------------
+---- Connect to remote servers:
+
+-- Option 1:
+
+$ lftp -u user,password sftp://{{host}}
+
+$ lftp -u user,password -p port sftp://{{host}}
+
+$ lftp -u user,password {host}
+
+$ lftp -u benem ftp02.actito.be
+>> pwd: passphrase prompted
+
+-- OR if the pwd is complex with a symbol that break it:
+lftp -u 'user,password' {host}
+
+-- PROBLEM with ! (question mark), do:
+$ lftp -u 'user,pass!word' server
+
+-- Option 2:
+$ sftp -oPort=xxx user@server (pwd request will be prompted)
+
+-- Option 3:
+$ lftp $login:$passw@$server:$port
+
+-- Option 4:
+$ lftp sftp://login@my.host.url:port
+$ lftp -c 'set sftp:connect-program "ssh -a -x -i <keyfile>"; connect sftp://user@example.com; mirror -eR files; ...'
+
+-- Option 5:
+$ sftp -i /local/path/to/my/keyPrivate -P port login@host
+
+-- Option 6: 
+$ sftp -i nameofyourprivate.key -P port login@url.client.server
+
+$ sftp -oPreferredAuthentications=publickey -oIdentityFile=.ssh/path/to/id user@remoteserver
+
+
+
+----------------------------------------------------------
+-- Connect with SSH, with path to key:
+$ ssh -i /c/Users/username/.ssh/key/id_rsa user@server
+
+
+
+-----------------------------------------------------------------
+-- Key formats:
+
+-- PUTTY key:
+PuTTY-User-Key-File-2: ssh-rsa
+Encryption: none
+Comment: imported-openssh-key
+Public-Lines: 12
+AAAAB3NzaC1yc2EA...
+
+K/EP
+Private-MAC: f9e2...
+
+-- LINUX key:
+-----BEGIN RSA PRIVATE KEY-----
+MIIJKQIBA...
+
+-----END RSA PRIVATE KEY-----
+
+
+
+-----------------------------------------------------------------
+-- Check format will be accepted:
+$ openssl rsa -in nameofmy.key
+
+Example:
+
+-- ko answer
+user@host ~ $ openssl rsa -in privatekey_name.ppk
+
+unable to load Private Key
+139884381235088:error:0906D06C:PEM routines:PEM_read_bio:no start line:pem_lib.c:707:Expecting: ANY PRIVATE KEY
+
+-- ok answer
+user@host ~ $ openssl rsa -in privatekey_name.ppk
+writing RSA key
+-----BEGIN RSA PRIVATE KEY-----
+MIIJ...
+
+
+
+-----------------------------------------------------------------
+-- Add a command line after the connection:
+LFTP: add -e and then we put a command line
+$ lftp user:password@$ftpServer:2121 -e "cd IN; put -a $logFileStandard ;quit"
+ 
+
+
+-----------------------------------------------------------------
+-- Make cd and ls in one row on the server:
+define:
+$ cdls() { cd "$@" && ls -l; }
+then use the defined function as:
+$ cdls nameOfMyFolder
+
+Example:
+user@server ~ $ cdls testsAPI
+total 4
+-rw-rw-r--. 1 user user11 Aug 27 12:12 test1.txt
+
+
+
+-----------------------------------------------------------------
+-- Copy files from server to local:
+$ get FileName.ext
+$ exit
+
+or mget (multiget):
+$ mget fileName*
+
+Back on local, do ls:
+user@host ~ $ ls -l
+total 4
+-rw-------. 1 user user 1063 Jun  5 10:27 FileName.ext
+
+-- To get all files:
+$ mirror
+
+In local, we should get all the files from server, in the location where we executed this command
+
+-- SCP:
+$ scp -i /path/to/key/keyname user@remoteserver:/path/fileName.ext /c/Users/user/localpathfolder/
+
+-- copy of a list of file with same name:
+$ scp -i /path/to/key/keyname user@remoteserver:/path/fileName*.zip /c/Users/user/localpathfolder/
+
+$ scp -oIdentityFile=.ssh/path/to/id user@remoteserver:/synchro/incoming/aFile.ext /home/user/local/folder/ 
+
+Caution: from Windows Power Shell, the path can change to something like below
+$ scp -i /path/to/keyname.pem user@server:/home/ubuntu/path/afilename.ext C:\Users\username (etc)
+
+
+
+---------------------------------------------------------------------
+-- Copy files from local to server:
+Sequence:
+1- connect to client server, example: sftp -oPort=xxx user@server (pwd will be prompted)
+2- once connected, navigate to the correct path: cd /my/path
+3- use put command: put nameofthefile
+
+Or also, mput (multiput)
+$ mput fileName*
+
+OTHER POSSIBILITY:
+$ scp nameofmyfile.ext user@server >> pwd will be prompted
+
+$ scp -i /path/to/key/keyname /c/Users/user/pathfolder/filename.ext user@remoteserver:
+>> pwd prompted
+
+
+
+-- While connected to an intermediate ftp/sftp, how to get file on this intermediate server:
+$ scp user@remoteserver:/full/path/to/remote/file.extension /path/interm/server/folder
+
+
