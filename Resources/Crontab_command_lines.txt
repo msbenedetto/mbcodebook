@@ -1,0 +1,37 @@
+Syntax:
+crontab [-u username] filename
+crontab [-u username] [-l|-r|-e] [-i] [-s]
+
+-----------------------------------------------------------------
+---- crontab -e
+to EDIT the cron table
+
+Once in it, ESC, forward slash to mk a search in it, type the text we look for, ENTER
+type 'n' to go to next occurrence
+type 'i' to insert
+
+To save and exit: ESC, colon(:), type "wq" to write (save) and quit the crontab, and then ENTER
+
+To exit without saving: ESC, :q!, ENTER
+Another option to search if ESC \ does not work is to do / and type what you are searching then ENTER
+n to go to next occurrence etc
+
+-----------------------------------------------------------------
+---- crontab -l
+display the current crontab
+
+-----------------------------------------------------------------
+---- crontab -r
+remove the current crontab /!\
+
+-----------------------------------------------------------------
+---- crontab -i
+Also remove the crontab but prompt a yes/no question before
+
+-----------------------------------------------------------------
+---- crontab -u username
+Specifies the user whose crontab is to be viewed or modified.
+If this option is not given, crontab opens the crontab of the user
+who ran crontab. Note: using su to switch users can confuse crontab,
+so if you are running it inside of su, always use the -u option
+to avoid ambiguity.
