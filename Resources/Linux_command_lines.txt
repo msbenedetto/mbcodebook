@@ -1,0 +1,468 @@
+-----------------------------------------------------------------
+"ll" is an alias and is set to "ls -l", to go faster. See below how to do that:
+
+-----------------------------------------------------------------
+---- How to set up an alias: [https://es.wikipedia.org/wiki/Alias_(Unix)]
+$ alias myAliasName = /path/to/my/script.sh
+
+-- Set up a small alias to get a more flexible way to do a long list:
+$ alias ll='ls -l'
+-- Now when you type 'll' or even 'll -a', it's the same as typing ls -l, a little bit shorter
+
+---- How to see the list of aliases:
+$ alias
+alias grep='grep --color=auto'
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+...etc
+
+---- How to verify what is the object "myAliasName":
+$ which myAliasName
+alias myAliasName ='aliasName'
+
+---- If the upper CMD does not work, you may find anyway the previously defined alias reported in this hidden file:
+user@host:~$ vi .bashrc
+...
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF' ...etc 
+
+
+
+-----------------------------------------------------------------
+---- Get help
+For example you need help on the 'scp' command line, use the manual command line like this:
+$ man scp
+
+Or you can also get help like this:
+$ cat --help
+-h may be another option to get help.
+
+
+
+-----------------------------------------------------------------
+---- cd ---- change directory
+$ cd /path/to/dir >> navigate in the directory tree system to the
+specified path "/path/to/dir"
+$ cd
+$ cd $HOME
+$ cd ~
+>> All 3 are the same, they will put you in the home directory.
+Make "echo $HOME" to see where is pointing this variable
+$ cd -
+You will go back to the previous directory you were in
+
+ 
+
+---------------------------------------------------------------------
+---- cat ---- concatenate
+You can read the data from a file and get its content as output.
+$ cat filetest.txt
+
+
+
+---------------------------------------------------------------------
+---- How to check a file without download it or unzip it: ZCAT
+The following command can be use while connected to the FTP remote server: 
+
+user@server: zcat file.zip | head -n10
+
+The advantage of this command is that you do not use GET and you do not use UNZIP.
+Please note zcat work only if the archive contain only a single file.
+
+
+-----------------------------------------------------------------
+---- ls ---- list
+List current directory content:
+$ ls
+
+List only docs beginning by 'mydoc':
+$ ls mydoc*
+
+List content of 'mydirectory':
+$ ls /mydirectory
+
+Long list:
+$ ls -l
+List even the hidden docs:
+$ls -a or $ ls --all
+List ordering by date and time:
+$ ls -lt
+FORCE refresh:
+$ ls -lrt
+
+ORDER BY TIME list of files:
+$ ls -htr
+
+
+
+-----------------------------------------------------------------
+---- .gz ---- gunzip
+to unzip that kind of file: filename.gz:
+[user@host ~]$ gunzip filename.gz
+to zip again:
+[user@host ~]$ gzip filename.extension
+
+ 
+
+-----------------------------------------------------------------
+---- mv ---- move / rename
+mv >> can rename but also move the file to another folder
+  ex 1:
+$ mv /home/folder1/myscript.sh /home/folder2/myscript.sh
+I'm moving the file to another folder
+  ex 2:
+$ mv /home/folder1/myscript.sh /home/folder2/my_new_script.sh
+I'm moving the file to another folder with a different name
+>> this cmd line will move AND rename it in one go
+  If you stay in the same folder, you can rename doing:
+$ mv myscript.sh my_new_script.sh
+
+
+
+-----------------------------------------------------------------
+---- pwd ---- returns the current path location in server tree
+---- mkdir ---- make a new directory (folder)
+
+
+
+-----------------------------------------------------------------
+---- cp ---- copy of an object
+$ cp myfile1.csv myfile2.csv
+>> will copy the file called myfile1.csv in the folder we are
+and will create a new one called myfile2.csv
+---- scp ---- secure copy
+allows files to be copied to, from, or between
+different hosts. It uses ssh for data transfer and provides the same
+authentication and same level of security as ssh.
+  ex 1: from ftp/sftp to server (with pwd prompt)
+[ftpuser@ftphostname foldername]$ scp my_file.txt user@host:/home/path/to/directory/destination
+  ex 2: from server to sftp space (no pwd prompt)
+[user@host foldername]$ scp file.txt ftpuser@ftpx:/home/path/to/directory/destination
+
+
+
+-----------------------------------------------------------------
+---- wc ---- wc count
+$ wc -l file.txt
+will return:
+4255 file.txt
+$ wc -l < file.txt will only return 4255
+
+
+
+-----------------------------------------------------------------
+---- list one or more file based on search pattern
+
+$ l partialnameofsearchedfile*
+$ ls partialnameofsearchedfile*
+
+example: $ ll nameofil*
+
+---- list hidden files
+$ ll -a or 
+$ ls -a
+
+
+
+-----------------------------------------------------------------
+---- rm ---- remove
+to remove a directory that contains other files or directories, use the following command:
+
+$ rm -r mydir >> WILL PROMPT for approval to delete each of the files.
+If you don't want to receive a prompt for each file,
+use the following command instead:
+$ rm -rf mydir
+
+
+
+-----------------------------------------------------------------
+---- which ---- where the script is located at (path)
+ex: $ which myscript.sh
+returns: /home/myfolder/myscript.sh
+
+ 
+
+-----------------------------------------------------------------
+---- file ---- returns type encoding of the file
+$ file file.txt
+file.txt: ASCII text
+
+ 
+
+-----------------------------------------------------------------
+---- chmod ---- change mode
+$ chmod 777 file.txt
+will give full r-w-x permissions if allowed on file.txt
+ 
+
+
+-----------------------------------------------------------------
+---- sdiff ---- see differences between files
+$ sdiff -s file.txt file2.txt
+
+ 
+
+-----------------------------------------------------------------
+---- date ---- if set up (sadly not always), returns the timestamp of the server you're in
+$ date
+Tue Aug 10 21:16:47 CEST 2021
+
+
+
+-----------------------------------------------------------------
+---- sed ---- parses and transforms text
+$ sed -i "1iMEMBER_ID|EMAIL|CAMPAIGN_ID|CAMPAIGN_NAME|DATE_SENT" myfile.txt
+>> insert at line 1
+$ sed -i "2iMEMBER_ID|EMAIL|CAMPAIGN_ID|CAMPAIGN_NAME|DATE_SENT" myfile.txt
+>> insert at line 2
+sed -i "1i${texttoinsert}" ${filename} ## << the "1i" command tells sed to go to line 1 and insert the text there. The -i option causes the file to be edited "in place" and can also take an optional argument to create a backup file For example: $ sed 's/thingtoreplace/replaceitwiththis/' ---- check file or directory size ---- Size of a directory: $ du -sh /tmp Size of a file: $ du -h /tmp/xyz $ ls -sh nameoffile.extension $ ls - l nameoffile.extension ---- take off text highlighted ---- enter in a script, text file etc press ESC and type: :nohl ---- how to see the list of running processes with associated number ref      and select one (-i >> lower upper indistinct) with bingo in it
+$ ps -ef | grep -i bingo
+>> will return a list with num processes
+ 
+
+
+-----------------------------------------------------------------
+---- kill a process
+$ kill -9 numprocess1 numprocess2 etc
+example: kill -9 18395 18417
+
+ 
+
+-----------------------------------------------------------------
+---- tail
+example: we go to a folder and display all the .csv files
+AND then (the pipe add an action) we take the most recent one
+
+$ ls /home/dsadm/test_folder/*.csv | tail -1
+[user@myhost my_folder]$ ll
+total 19104
+-rw-r--r-- 1 user user 10293 Dec 13 15:23 my_clientfile_30112018.csv
+-rw-r--r-- 1 user user 3258 Jan 16 10:57 my_clientfile_09012019.csv
+-rw-r--r-- 1 user user 3573 Jan 8 12:40 my_clientfile_21122018.csv
+-rw-r--r-- 1 user user 18528 Feb 20 17:56 my_clientfile_17022019.txt
+-rw-r--r-- 1 user user 18528 Feb 20 17:52 my_clientfile_18022019.txt
+-rw-r--r-- 1 user user 12393982 Jan 31 10:57 Myfilezipped_20190130.zip
+[user@host test_folder]$ pwd
+/home/user/test_folder
+[user@host test_folder]$ ls /home/user/test_folder/*.csv | tail -1
+/home/user/test_folder/my_clientfile_21122018.csv
+[user@host test_folder]$ ls /home/user/test_folder/*.csv | tail -2
+/home/user/test_folder/my_clientfile_09012019.csv
+/home/user/test_folder/my_clientfile_21122018.csv
+[user@host test_folder]$ ls /home/user/test_folder/*.csv | tail -3
+/home/user/test_folder/my_client_30112018.csv
+/home/user/test_folder/my_clientfile_09012019.csv
+/home/user/test_folder/my_clientfile_21122018.csv
+[user@host test_folder]$ ls /home/user/test_folder/*.csv | tail -4
+/home/user/test_folder/my_client_30112018.csv
+/home/user/test_folder/my_clientfile_09012019.csv
+/home/user/test_folder/my_clientfile_21122018.csv
+
+>> we have only 3 csv files in the folder, so here we have everything
+
+
+
+-----------------------------------------------------------------
+---- grep
+$ grep _NEW nameoffile.ext
+>> We search for "_NEW" in nameoffile.ext
+
+$ grep -i stringsearched nameoffile.ext
+>> We search lower and upper case, all occurrences
+
+$ grep "Moving file" *import*
+where "Moving file" is the text (String) IN THE FILE we're looking for
+where *import* is A PART of the NAME OF THE FILES where we are searching in
+
+
+
+-----------------------------------------------------------------
+---- find
+search for a FOLDER type of name when there is a too long list of folders (logs folders)
+The following commands perform the required query:
+$ find . -name "foo*"
+$ find -name "*c*" -type d
+The dot (.) means we start the search with the current directory (no need to specify directory in case of current directory)
+-name "*c*" - We search a name that contains the letter c somewhere
+-type d -> We search a DIRECTORY
+
+You can run the command on other directory (/full/path/to/dir) using:
+$ find /full/path/to/dir -name "*c*" -type d
+
+or if are in the directory:
+$ find -name "thestringSearched_*"
+
+$ find . -name \*2019\*
+>> will find in the directory where we are, the name of the files where there is 2019 in the name (search based on partial name of the file)
+
+$ find -name "*myString*"| sort -n
+>> Look for a file with name containing 'myString', in time order 
+
+
+
+-----------------------------------------------------------------
+---- know more on the server
+$ lsb_release -a
+$ uname -a
+$ cat /etc/lsb-release
+$ cat /etc/issue.net
+$ cat /etc/debian_version
+
+
+
+-----------------------------------------------------------------
+---- know more on the file itself (encoding)
+
+$ file -i nameFile.ext
+
+Ex:
+
+~$ file -i test.html
+test.html: text/html; charset=us-ascii
+
+
+
+-----------------------------------------------------------------
+---- change encoding
+$ iconv -f UTF-8 -t ISO-8859-1 file1.txt -o file2.txt
+
+
+
+-----------------------------------------------------------------
+---- vi editor commands
+
+/                   to make a search
+
+To search for a string in upper or lower case:
+For example if we're looking for a string like 'unjoin' (or the beginning), we do:
+/[Uu][Nn][Jj]
+
+To HIGHLIGHT your search, do:
+:set hlsearch
+
+n                   to go to the next found instance (forward >>)
+shift N             to go to the previous instance found (back <<) 
+
+dd                  to delete
+
+i                   to insert
+
+u                   to undo
+ctrl + r            to redo
+
+:%s/newsletter/NEWSLETTER/g
+
+>> the g is for 'global' - This cmd line allows to search for newsletter in lower case and replace it in UPPER case in all the doc (if more than 1 value searched is on 1 line, it will replace them all)
+without the g, it will only replace the 1st one
+
+:1                  colon and number will take us to the number of line
+
+For example:
+:1                  to the 1st line of the doc
+: arrow up          last commands used in the vi doc we're in
+:w copyofsql        will copy the whole doc in the folder we're in with the name provided, "copyofsql"
+                    After this we're still on the original doc, not on the copy
+:!                  it allows us to NO QUIT the file we're working on, but to have a look at our putty
+                    If we press enter, we will come back in our vi text editor in the file we're working on.
+shift i             end of the line (not working)
+shift a (so A)      end of the line
+shift i (I)         beginning of the line
+
+TO ERASE THE CONTENT of the whole file, do: 
+gg >> to move the cursor to the first line of the file, if it is not already there.
+Then, do: 
+dG >> to delete all the lines.
+
+TO DELETE some lines in vi:
+$ vi file.txt
+--> then in the file, make:
+:3,5d
+to delete line 3 to 5
+
+Also, while editing your file, you can navigate to the line you want and type directly: 
+3dd >> 3 fewer lines
+4dd >> 4 fewer lines etc.
+
+TO SAVE AND EXIT directly 
+You can save and exit by typing :x (or ZZ). 
+
+ 
+
+-----------------------------------------------------------------
+---- LOOK FOR DIFFERENT LINES in a file (from line x to line z)
+Assuming you need lines 20 to 40:
+sed -n '20,40p;41q' file_name
+or:
+awk 'FNR>=20 && FNR<=40' file_name
+
+ 
+
+-----------------------------------------------------------------
+---- SEE one specific line in a file
+print line number 52:
+$ sed -n '52p' # method 1
+$ sed '52!d'   # method 2
+$ sed '52q;d'  # method 3,  efficient on large files 
+
+ 
+
+-----------------------------------------------------------------
+---- df command line    
+$ df -h
+
+Muestra las unidades de disco, el tamaño y el espacio libre.
+-h: muestra el resultado en unidades entendibles por el usuario (M= Megabytes, G=Gigabytes, etc).
+
+ 
+
+-----------------------------------------------------------------
+---- create an ssh keygen
+$ ssh-keygen -t dsa -f id_dsa_CLIENTNAME_sftp
+
+
+
+-----------------------------------------------------------------
+---- Bash History
+If you want to delete a particular command in the file, enter:
+$ history -d <line number> . 
+To clear the entire contents of the history file, execute:
+
+$ history -c . 
+The history file is stored in a file that you can modify, as well. 
+Bash shell users find it in their home directory
+
+history is located in you home folder at:
+/home/username/
+If you list with hidden files:
+$ ls -a
+You will see a file named: ".bash_history"
+-rw-------.  1 user user 35864 May 25 17:19 .bash_history
+-rw-r--r--.  1 user user    18 Apr  1  2020 .bash_logout
+-rw-r--r--.  1 user user   193 Apr  1  2020 .bash_profile
+-rw-r--r--.  1 user user   231 Apr  1  2020 .bashrc
+drwxr-xr-x.  3 user user     8 May 15  2020 .config
+
+You can edit it, see it, etc:
+cat .bash_history
+vi .bash_history
+...
+
+
+
+-----------------------------------------------------------------
+---- Set parameters in command line: assign and echo
+
+user@server ~ $ supertest=0
+user@server ~ $ echo $supertest
+0
+user@server ~ $ echo supertest
+supertest
+user@server ~ $ echo $supertest
+0
+user@server ~ $ supertest=2
+user@server ~ $ echo $supertest
+2
+
