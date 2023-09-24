@@ -1,0 +1,31 @@
+---- alias ---- 
+$ doskey ls=dir
+--> We set up a new command in Windows that has the same list directory name ('ls') but is in fact the 'dir' cmd line in Windows
+
+
+-----------------------------------------------------------------
+---- cd ---- change directory
+
+---- dir ---- list current directory content
+
+---- move ---- move the file
+
+---- chdir ---- returns the current path location in server tree
+
+---- md ---- make a new directory (folder)
+
+---- copy ---- copy of an object
+
+---- find ---- search a string in a file
+
+---- del ---- delete a file
+
+---- rmdir ---- delete a directory
+
+---- attrib ---- change mode, same as chmod in Linux
+
+---- fc ---- compare content of files (same as diff in Linux)
+
+---- time ---- output the hour
+
+---- taskkill ---- kill a process
