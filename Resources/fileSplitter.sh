@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ###########################
-# File name: filesplitter.sh
+# File name: fileSplitter.sh
 # Author: Mathilde Benedetto, sept 2023
 ###########################
 # Purpose: This script splits a large data file into several bits, adding the header in each new file generated.
@@ -45,5 +45,5 @@ printf "%s\n%s" "$header" "`cat $fileToSplit`" > $fileToSplit
 <<comment
 How to use this script in command line:
 Example:
-$ sh filesplitter.sh myfilename.txt 1000 .txt newFileName
+$ sh fileSplitter.sh myfilename.txt 1000 .txt newFileName
 comment
