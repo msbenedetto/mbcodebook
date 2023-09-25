@@ -1,8 +1,10 @@
 #!/bin/sh
 
+###########################
 # File name: filesplitter.sh
 # Author: Mathilde Benedetto, sept 2023
-
+###########################
+# Purpose: This script splits a large data file into several bits, adding the header in each new file generated.
 ###########################
 # ARGUMENTS received, set to parameters:
 # 1st argument of the command line: the file name to split
@@ -18,7 +20,7 @@ fileName=$4
 # ACTIONS:
 
 # FILE BACK UP
-# For safety, we can do a back-up of the file, comment or uncomment if needed:
+# For safety, we can do a back-up of the file. UNCOMMENT the line below if needed: [if the file is very large it can take time]
 # cp $fileToSplit $fileToSplit'.bk'
 
 # 1: Keep the header of the file in a parameter:
